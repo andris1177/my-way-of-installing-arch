@@ -95,6 +95,10 @@ genfstab -U /mnt > /mnt/etc/fstab
 
 ### After this, you can enter the newly installed os.
 
+``` bash
+arch-chroot /mnt
+```
+
 ## Localization
 
 ### first you have to set the region.
@@ -319,6 +323,22 @@ steam: sudo pacman -S steam
 neofetch: sudo pacman -S neofetch
 sudo pacman -S firefox
 sudo pacman -S thunar
+sudo pacman -S libreoffice-fresh
+sudo pacman -S gvfs # for thunar to work properly
+sudo pacman -S breeze-gtk
+sudo pacman -S breeze
+sudo pacman -S lxappearance 
+sudo pacman -S nitrogen
+sudo pacman -S mpv
+sudo pacman -S nsxiv
+sudo pacman -S okular
+sudo pacman -S btop
+sudo pacman -S cmake
+sudo pacman -S python3
+sudo pacman -S imagemagick # for screenshot
+sudo pacman -S xclip
+sudo pacman -S tumbler
+sudo pacman -S playerctl
 ```
 
 ## Setting up a firewall
@@ -348,8 +368,8 @@ xrdb -merge ~/.Xresources
 ### Setting up the trackpad
 
 ``` bash
-touch /etc/X11/xorg.conf.d/90-touchpad.conf
-nvim /etc/X11/xorg.conf.d/90-touchpad.conf
+sudo touch /etc/X11/xorg.conf.d/90-touchpad.conf
+sudo nvim /etc/X11/xorg.conf.d/90-touchpad.conf
 ```
 
 ### the content of the file
@@ -374,4 +394,4 @@ sudo auto-cpufreq --install
 sudo systemctl enable --now auto-cpufreq
 ```
 
-### Now you can reboot and you will see the lightdm display manager, and now you can log in. After logging in, if you decide to use i3, it will go through the initial setup. After that.
+### Now you can reboot and you will see the lightdm display manager, and now you can log in. After logging in, if you decide to use i3, it will go through the initial setup. After that you can configure it by editing the config file in ~/.config/i3/config. Using arch especially with a window manager require some knowledge and most of them you can get by reading the man page or searching for it in the arch website or just searching for old forum posts.
