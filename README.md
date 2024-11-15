@@ -74,9 +74,9 @@ swapon /dev/nvme0n1p2
 
 ``` bash
 nvme0n1     259:5    0 931.5G  0 disk 
-├─nvme0n1p1 259:6    0   100M  0 part /boot/efi
+├─nvme0n1p1 259:6    0   100M  0 part /mnt/boot/efi
 ├─nvme0n1p2 259:7    0    32G  0 part [SWAP]
-└─nvme0n1p3 259:8    0 899.4G  0 part /
+└─nvme0n1p3 259:8    0 899.4G  0 part /mnt
 ```
 
 ## Installing the os
