@@ -1,12 +1,14 @@
 # My way of installing Arch Linux
 
+## Installing arch can be hard for the first time but if you understand the steps it is not that difficult, the installation can be separated into three major part the first is makeing the partitions formating and mounting them, the second part is installing the base system and creating the fstab, and the third step is setting up the system. You could use the archinstall script that is on the archiso but I recommend to install arch with this methode bacuse you can learn a lot about the system so if it break you can have a better chance fixing it. A couple of months ago the grub have completly died on my system but I was able to boot into the arch iso mount my drives chroot into my system and reinstall grub so I was able to avoid reinstalling my sistem. 
+
 ## This tutorial will show you how to install arch linux on a uefi system without encryption.
 
 ### If your terminal gets cluttered, you can use ctrl+l to clear it.
 
 ## Connecting to the internet
 
-### If you are using a laptop or a pc with wifi, you need to connect to the internet first. You can do this with iwct.
+### If you want to use wifi, you need to connect to the internet first. You can do this with iwct.
 
 ``` bash
 iwctl
@@ -44,7 +46,7 @@ nvme1n1     259:0    0 465.8G  0 disk
 nvme0n1     259:5    0 931.5G  0 disk 
 ```
 
-### In this case, on my first nvme ssd, I have Windows installed. I want to install Arch on the secodn nvme drive, so I'm going to use cfdisk to partition it. If you have a sata drive, you're going to use sda, or any other drive that starts with sd and is followed by an alphabet character. In cf diks, you have to use the arrow key to navigate. You can use up and down to select the partition, and left and right to select what you want to do with it. If you have a partition on this drive first, you need to delete it and then create a new partition, a 100M for boot, as many Gs for swapping as much ram as you have, and the rest for home and root. After that write and quit and, you should see something like this.
+### In this case, on my first nvme ssd, I have Windows installed. I want to install Arch on the secodn nvme drive, so I'm going to use cfdisk to partition it. If you have a sata drive, you're going to use sda, or any other drive that starts with sd and is followed by an alphabet character. In cfdiks, you have to use the arrow key to navigate. You can use up and down to select the partition, and left and right to select what you want to do with it. If you have a partition on this drive first, you need to delete it and then create the new partitions. After that write and quit and, you should see something like this after running lsblk.
 
 ``` bash
 nvme0n1     259:5    0 931.5G  0 disk 
@@ -61,7 +63,7 @@ mkfs.fat -F 32 /dev/nvme0n1p1
 mkswap /dev/nvme0n1p2
 ```
 
-### After this, you can mount your drives.
+### Now that yoou have the partitions you should mount them.
 
 ``` bash
 mount /dev/nvme0n1p3 /mnt
@@ -87,13 +89,13 @@ nvme0n1     259:5    0 931.5G  0 disk
 pacstrap /mnt base linux linux-firmware sof-firmware base-devel grub efibootmgr neovim networkmanager
 ```
 
-### Generating fstab can be done by hand, but I recommend not, especially in the first install.
+### Generating fstab can be done by hand, but I recommend against it, especially in the first install.
 
 ``` bash
 genfstab -U /mnt > /mnt/etc/fstab
 ```
 
-### After this, you can enter the newly installed os.
+### Now that the system is installed and fstab is done you can log into the system and start configuring the basic settings
 
 ``` bash
 arch-chroot /mnt
@@ -108,52 +110,61 @@ ln -sf /usr/share/zoneinfo/Continent/city /etc/localtime
 hwclock --systohc
 ```
 
-### After this, you have to set the os language. You can do this by editing locale.gen and uncommenting the language that you want to use. To exit vim press esc, type wq, and press enter. Uncommenting means removing the # before the language that you want to use.
+### To set the os language the loacle-gen need to be edited. If you chose neovim as the text editor without using it before the most important is to quit vim press esc and write :w or :wq to save the changes to get into insert mode press i. 
 
 ``` bash
 nvim /etc/locale.gen
 ```
 
-### After that, you can generate it.
+### Now that you selected the language that you want to use generate it. 
 
 ``` bash
 locale-gen
 ```
 
-### A couple of applications don't use locale-gen but instead read /etc/locale.conf, so you want to edit that as well. To set the language, you have to type LANG= and the language, like in the locale.gen file. For example, to use British English, you have to use en_GB.utf-8.
+### A couple of application doesn't use the output of locale-gen but instead read /etc/locale.conf, so you want to edit that as well.
 
 ``` bash
 nvim /etc/locale.conf
 ```
 
-### After this, you can set the language of the keyboard. It's not important if you use a US keyboard, but if not, you have to set it.
+### example config
+```bash
+LANG=en_GB.utf-8
+```
+
+### If you use a non us layout keyboard you should edit vconsole.conf to set the correct layout.
 
 ``` bash
 nvim /etc/vconsole.conf
-# example: KEYMAP=uk
 ```
 
-### After this, you have to set the hostname.
+### example config
+```bash
+KEYMAP=uk
+```
+
+### You can set the hostname here.
 
 ``` bash
 nvim /etc/hostname
 ```
 
-## Setting up users
+## Setting up the users
 
-### To have a superuser, you have to set a password.
+### First thing first you should set a root password.
 
 ``` bash
 passwd
 ```
 
-### Now you can add users. If you want to access sudo from that account, it is very important to add it to the wheel group.
+### To add a user you can use useradd
 
 ``` bash
 useradd -m -G wheel -s /bin/bash name
 ```
 
-### Now you should set a password.
+### And dont forget to set a password for the new user.
 
 ``` bash
 passwd name
@@ -165,7 +176,16 @@ passwd name
 EDITOR=nvim visudo
 ```
 
-### In this configuration, you want to uncomment: %wheel      ALL=(ALL:ALL) ALL <br> <br> To check if you have done it correctly, you can log in to your new user and check if sudo works. If the system update has been run, sudo has been set up correctly.
+### You only have to remove one # befor this line
+
+Example config
+``` bash
+...
+%wheel ALL=(ALL:ALL) ALL
+...
+```
+
+### If you want to test it you can log inot your account and run a command that require a sudo password to see if you have the right to run commands with sudo.
 
 ``` bash
 su name
@@ -190,7 +210,7 @@ grub-mkconfig -o /boot/grub/grub.cfg
 
 ## Exiting the installed system and rebooting.
 
-### When umounting the drives, not all drives can be unmounted, and it's not a problem, you can reboot safely.
+### When umounting the drives, not all drives will be unmounted this is normal you can reboot. 
 
 ``` bash
 exit
@@ -202,7 +222,7 @@ reboot
 
 ### If you have done this correctly, you are going to see the grub, and after that, a tty console where you can log in with your username and password.
 
-###  Connecting to the internet. If you use wired internet, you don't have to do anything.
+###  Connecting to the internet. If you use wired internet, you can skip this step.
 
 ``` bash
 nmcli device status
@@ -222,22 +242,29 @@ ping archlinux.org
 64 bytes from archlinux.org (95.217.163.246): icmp_seq=2 ttl=44 time=39.4 ms
 ```
 
-### Now you have decided which dekstop environment (de) or window manager (wm) you want to use, you can see the available options here <br> de: https://wiki.archlinux.org/title/desktop_environment, <br> wm: https://wiki.archlinux.org/title/window_manager, <br> I'm going to use i3-wm.
+### Now you have to decide which dekstop environment (de) or window manager (wm) do you want to use, you can see the available options here <br> de: https://wiki.archlinux.org/title/desktop_environment, <br> wm: https://wiki.archlinux.org/title/window_manager, <br> I'm going to use i3-wm but feel free to chose any other de or wm but you may have to configure your system differently so if you chose something else see the archwiki or finde anathor tutorial for that specific de or wm. You dont have to be wory to much about wich one to chose you can install more than one, i use i3 as my main wm but i have installed dwm and hyprland to test them out. If you installed more than one you can selecvt it in your login screen. 
 
 ``` bash 
 sudo pacman -S xorg xorg-xinit xorg-server lightdm-gtk-greeter i3-wm kitty i3status dmenu
 sudo systemctl enable lightdm
 ```
 
-### A couple of applications in the standard repo and the aur require 32bit libraries, so you should enable it by enabeling multilib.
+### A couple of applications in the standard repo and the aur require 32bit libraries, so you should enable it by removing the # before the multilib in the config file. 
 
 ``` bash
 sudo nvim /etc/pacman.conf
-remove # befor multilib
 sudo pacman -Syu
 ```
 
-### In Arch Linux, a lot of programs are in the standard repository, but a lot of applications aren't, so you may have to use the Arch user repository (AUR). When you are using it, you have to be more careful about what you install because it can contain broken, or malicious applications.
+### example config
+``` bash
+...
+[multilib]
+Include = /etc/pacman.d/mirrorlist
+...
+```
+
+### In Arch Linux, a lot of programs are in the standard repository, but a lot of applications aren't, so you may have to use the Arch user repository (AUR). When you are using it, you have to be more careful about what you install because it can contain broken, ore unmaintained packages.
 
 ```
 sudo pacman -S git
@@ -256,12 +283,6 @@ sudo pacman -S xf86-video-amdgpu
 sudo pacman -S vulkan-radeon
 sudo pacman -S amdvlk
 sudo pacman -S mesa-vdpau
-```
-
-### Now you can reboot
-
-``` bash
-reboot
 ```
 
 ### installing Nvidia GPU drivers
@@ -284,11 +305,6 @@ sudo nvim /etc/mkinitcpio.conf
  mkinitcpio -P
 ```
 
-### Now you can reboot.
-
-``` bash
-reboot
-```
 
 ### Installing pipewire
 
@@ -296,7 +312,7 @@ reboot
 sudo pacman -S pipewire pipewire-pulse
 ```
 
-### If you want to use a GUI to connect to wifi.
+### If you want to use a GUI wiffi manager you can install this but networkmanager includes a tui tool so you can use nmtui as weell.
 
 ``` bash
 network config gui for nmcli: sudo pacman -S nm-connection-editor
@@ -308,38 +324,48 @@ network config gui for nmcli: sudo pacman -S nm-connection-editor
 sound settings gui: sudo pacman -S pavucontrol
 ```
 
-### If you want to set your displays in a gui, if you want to change something permanently, you have to save the layout into a script and run it in startap. For example, you can do it in i3 config.
+### For pipewire you can also install wireplumber wich is a realy cool way to manage audio/viode io between apps so you shouldt try it out. https://www.youtube.com/watch?v=Zv1P6-kUn0c&pp=ygUMI3dpcmVwbHVtYmVy
+
+``` bash
+sudo pacman -S pipewire
+```
+
+### If you want to set your displays in a gui you can use arandr, but keep in minde that this tool will only generate a script that uses xrandr to set the correct resolution and orientation so you have to make sure to run the output script in start in i3 you can do this by adding a line to the config file.
 
 ``` bash
 display settings gui: sudo pacman -S arandsr
-# start script with i3, optional
+```
+
+### example autorun in i3
+``` bash
 exec--no-startup-id path_to_script
 ```
 
 ### Some programs that i usually instal.
 
 ``` bash
-steam: sudo pacman -S steam
-neofetch: sudo pacman -S neofetch
-sudo pacman -S firefox
-sudo pacman -S thunar
-sudo pacman -S libreoffice-fresh
-sudo pacman -S gvfs # for thunar to work properly
-sudo pacman -S breeze-gtk
-sudo pacman -S breeze
-sudo pacman -S lxappearance 
-sudo pacman -S nitrogen
-sudo pacman -S mpv
-sudo pacman -S nsxiv
-sudo pacman -S okular
-sudo pacman -S btop
-sudo pacman -S cmake
-sudo pacman -S python3
-sudo pacman -S imagemagick # for screenshot
-sudo pacman -S xclip
-sudo pacman -S tumbler
-sudo pacman -S playerctl
+sudo pacman -S steam fastfetch firefox thunar libreoffice-fresh gvfs breeze-gtk breeze lxappearance nitrogen mpv nsxiv okular btop cmake python3 imagemagick xclip tumbler playerctl
 ```
+steam
+fastfetch
+firefox 
+thunar # file browser
+libreoffice-fresh
+gvfs # for thunar to work properly
+breeze-gtk # theme
+breeze # theme
+lxappearance # theme selector
+nitrogen # wallpaper tool
+mpv # video player
+nsxiv # image viewer
+okular # pdf viewer
+btop # system resources viewer
+cmake
+python3
+imagemagick # for screenshot
+xclip # to save the screenshot to the clipboard
+tumbler # give thumbnail to images 
+playerctl 
 
 ## Setting up a firewall
 
@@ -349,7 +375,7 @@ sudo systemctl enable ufw --now
 sudo ufw enable
 ```
 
-### You can install a GUI to manage UFW, but I don't recommend it. The GUI is probably better because you are going to set it up once and never touch it, but if you want to use it, you can.
+### You can install a GUI to manage UFW, but I don't recommend it. You have to set the firewal rules once so doing it in the terminal shouldn't be a scourge. 
 
 ``` bash
 sudo pacman -S gufw
@@ -358,7 +384,7 @@ sudo gufw
 
 ## Laptop specific settings
 
-### If you are using a laptop, you probably have to set a display scaling. You can do this by creating a config file, it wouldn't work on the tty, but it will be visible after a restart in i3.
+### If you are using a laptop, you may want to set the display scaling. You can do this by creating a config file, it wouldn't work on the tty, but it will be visible after a restart in i3.
 
 ``` bash
 echo "Xft.dpi: 140" > ~/.Xresources
@@ -386,7 +412,7 @@ Section "InputClass"
 EndSection
 ```
 
-### improving batterry life <br> <br> probably the most important thing in a laptop is to set up the system so it can work from a battery a reasonable amount of time. I recommend auto-cpufrq, which is probably the best tool to use
+### improving batterry life probably one of the most important thing in a laptop is to set up the system so it can work from a battery for a reasonable amount of time. I recommend auto-cpufrq, which is probably the best tool to use
 
 ``` bash
 yay -S auto-cpufrq
@@ -394,4 +420,4 @@ sudo auto-cpufreq --install
 sudo systemctl enable --now auto-cpufreq
 ```
 
-### Now you can reboot and you will see the lightdm display manager, and now you can log in. After logging in, if you decide to use i3, it will go through the initial setup. After that you can configure it by editing the config file in ~/.config/i3/config. Using arch especially with a window manager require some knowledge and most of them you can get by reading the man page or searching for it in the arch website or just searching for old forum posts.
+### Now you can reboot and you will see the lightdm display manager, and now you can log in. If you chose i3 you can check out my config for refference. https://github.com/andris1177/my-dotfiles
