@@ -242,7 +242,7 @@ ping archlinux.org
 64 bytes from archlinux.org (95.217.163.246): icmp_seq=2 ttl=44 time=39.4 ms
 ```
 
-### Now you have to decide which dekstop environment (de) or window manager (wm) do you want to use, you can see the available options here <br> de: https://wiki.archlinux.org/title/desktop_environment, <br> wm: https://wiki.archlinux.org/title/window_manager, <br> I'm going to use i3-wm but feel free to chose any other de or wm but you may have to configure your system differently so if you chose something else see the archwiki or finde anathor tutorial for that specific de or wm. You dont have to be wory to much about wich one to chose you can install more than one, i use i3 as my main wm but i have installed dwm and hyprland to test them out. If you installed more than one you can selecvt it in your login screen. 
+### Now you have to decide which dekstop environment (de) or window manager (wm) do you want to use, you can see the available options here <br> de: https://wiki.archlinux.org/title/desktop_environment, <br> wm: https://wiki.archlinux.org/title/window_manager, <br> I'm going to use i3-wm but feel free to chose any other de or wm but you may have to configure your system differently so if you chose something else see the archwiki or finde anathor tutorial for that specific de or wm. You dont have to be worry to much about wich one to chose you can install more than one, i use i3 as my main wm but i have installed dwm and hyprland to test them out. If you installed more than one you can selecvt it in your login screen. 
 
 ``` bash 
 sudo pacman -S xorg xorg-xinit xorg-server lightdm-gtk-greeter i3-wm kitty i3status dmenu
