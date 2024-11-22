@@ -315,13 +315,13 @@ sudo pacman -S pipewire pipewire-pulse
 ### If you want to use a GUI wiffi manager you can install this but networkmanager includes a tui tool so you can use nmtui as weell.
 
 ``` bash
-network config gui for nmcli: sudo pacman -S nm-connection-editor
+sudo pacman -S nm-connection-editor
 ```
 
 ### If you want a gui for pipewire.
 
 ``` bash
-sound settings gui: sudo pacman -S pavucontrol
+sudo pacman -S pavucontrol
 ```
 
 ### For pipewire you can also install wireplumber wich is a realy cool way to manage audio/viode io between apps so you shouldt try it out. https://www.youtube.com/watch?v=Zv1P6-kUn0c&pp=ygUMI3dpcmVwbHVtYmVy
@@ -333,7 +333,7 @@ sudo pacman -S pipewire
 ### If you want to set your displays in a gui you can use arandr, but keep in minde that this tool will only generate a script that uses xrandr to set the correct resolution and orientation so you have to make sure to run the output script in start in i3 you can do this by adding a line to the config file.
 
 ``` bash
-display settings gui: sudo pacman -S arandsr
+sudo pacman -S arandsr
 ```
 
 ### example autorun in i3
