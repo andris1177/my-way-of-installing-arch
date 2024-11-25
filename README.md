@@ -8,7 +8,7 @@
 
 ## Connecting to the internet
 
-### If you want to use wifi, you need to connect to the internet first. You can do this with iwct.
+### If you want to use wifi, you need to connect to the internet first. You can do this with iwctl.
 
 ``` bash
 iwctl
