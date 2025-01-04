@@ -273,7 +273,7 @@ cd yay
 makepkg -si
 ```
 
-### After installing yay you can aces the aur, yay works almost the same way as pacman one exepcion is tha you dont have to run yay as root.
+### After installing yay you can aces the aur, yay works almost the same way as pacman one exepcion is that you dont have to run yay as root.
 
 ### installing Nvidia GPU drivers
 
