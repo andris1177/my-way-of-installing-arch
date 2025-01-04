@@ -275,16 +275,6 @@ makepkg -si
 
 ### After installing yay you can aces the aur, yay works almost the same way as pacman one exepcion is tha you dont have to run yay as root.
 
-### Installing AMD GPU drivers
-
-``` bash
-yay -S lib32-mesa
-sudo pacman -S xf86-video-amdgpu 
-sudo pacman -S vulkan-radeon
-sudo pacman -S amdvlk
-sudo pacman -S mesa-vdpau
-```
-
 ### installing Nvidia GPU drivers
 
 ``` bash
