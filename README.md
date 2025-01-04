@@ -296,7 +296,12 @@ sudo pacman -S lib32-nvidia-utils
 
 ``` bash
 sudo nvim /etc/mkinitcpio.conf
-# remove kms from HOOKS array 
+```
+
+### Remove kms from HOOKS
+
+``` bash
+HOOKS=(base udev autodetect microcode modconf keyboard keymap consolefont block filesystems fsck)
 ```
 
 ### After editing the mkinitcpio, you have to rebuild it.
