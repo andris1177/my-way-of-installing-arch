@@ -327,13 +327,13 @@ sudo pacman -S pavucontrol
 ### For pipewire you can also install wireplumber wich is a realy cool way to manage audio/viode io between apps so you shouldt try it out. https://www.youtube.com/watch?v=Zv1P6-kUn0c&pp=ygUMI3dpcmVwbHVtYmVy
 
 ``` bash
-sudo pacman -S pipewire
+sudo pacman -S wireplumber
 ```
 
 ### If you want to set your displays in a gui you can use arandr, but keep in minde that this tool will only generate a script that uses xrandr to set the correct resolution and orientation so you have to make sure to run the output script in start in i3 you can do this by adding a line to the config file.
 
 ``` bash
-sudo pacman -S arandsr
+sudo pacman -S arandr
 ```
 
 ### example autorun in i3
