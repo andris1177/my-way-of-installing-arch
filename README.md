@@ -410,7 +410,7 @@ EndSection
 ### improving batterry life probably one of the most important thing in a laptop is to set up the system so it can work from a battery for a reasonable amount of time. I recommend auto-cpufrq, which is probably the best tool to use
 
 ``` bash
-yay -S auto-cpufrq
+yay -S auto-cpufreq
 sudo auto-cpufreq --install
 sudo systemctl enable --now auto-cpufreq
 ```
