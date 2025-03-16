@@ -339,7 +339,7 @@ exec--no-startup-id path_to_script
 ### Some programs that i usually instal.
 
 ``` bash
-sudo pacman -S steam fastfetch firefox thunar libreoffice-fresh gvfs breeze-gtk breeze lxappearance nitrogen mpv nsxiv okular btop cmake python3 imagemagick xclip tumbler playerctl
+sudo pacman -S steam fastfetch firefox thunar libreoffice-fresh gvfs breeze-gtk breeze lxappearance nitrogen mpv nsxiv okular btop cmake python3 imagemagick xclip tumbler playerctl ripgre unzip 
 ```
 steam
 fastfetch
