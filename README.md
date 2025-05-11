@@ -358,32 +358,8 @@ sudo pacman -S wireplumber
 ### 
 
 ``` bash
-sudo pacman -S steam fastfetch firefox thunar libreoffice-fresh gvfs breeze-gtk breeze lxappearance nitrogen mpv nsxiv okular btop cmake python3 imagemagick xclip tumbler playerctl ripgre unzip cmake discord
+sudo pacman -S audacity arduino-ide calibre prusa-slicer thunar firefox btop rofi fastfetch gamescope mangohud cmake python steam libreoffice-fresh gvfs breeze-gtk breeze mpv nsxiv okular tumbler playerctl ripgre unzip 
 ```
-steam
-fastfetch
-firefox 
-thunar # file browser
-libreoffice-fresh
-gvfs # for thunar to work properly
-breeze-gtk # theme
-breeze # theme
-lxappearance # theme selector
-nitrogen # wallpaper tool
-mpv # video player
-nsxiv # image viewer
-okular # pdf viewer
-btop # system resources viewer
-cmake
-python3
-imagemagick # for screenshot
-xclip # to save the screenshot to the clipboard
-tumbler # give thumbnail to images 
-playerctl
-unzip
-cmake
-discord
-
 
 ## Setting up a firewall
 
